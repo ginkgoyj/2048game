@@ -1,6 +1,6 @@
 # 2048
 
-一个用 Python 编写的命令行 2048 小游戏，包含基础版本和带排行榜的版本。
+一个用 Python 编写的命令行 2048 小游戏，包含当前主版本和几个保留的迭代版本。
 
 ## 功能
 
@@ -23,14 +23,11 @@
 
 ## 代码结构
 
-- 主版本：
-  - `csclaude/cscodex/game_2048.py`
-- 其他实现版本：
-  - `csclaude/game2048.py`
-  - `csclaude/cc1/game2048.py`
-  - `csclaude/cscodex/co1/game2048.py`
-
-仓库中保留了多个实现版本，分别采用了不同的代码组织方式。
+- 主版本：`game2048.py`
+- 迭代版本：
+  - `archive/v2_with_scores/game2048.py`
+  - `archive/v3_refactored/game_2048.py`
+  - `archive/v4_with_leaderboard/game2048.py`
 
 ## 核心实现
 
@@ -40,14 +37,14 @@
 
 ### 移动与合并逻辑
 
-主版本将一行或一列的处理拆成几个基础步骤：
+主版本按四个方向分别处理棋盘移动，包含：
 
 - 提取非零数字
 - 压缩到一侧
 - 合并相邻相同数字
 - 回写棋盘并补零
 
-在 `csclaude/cscodex/game_2048.py` 中，还把横向和纵向移动拆成 `compress_line`、`merge_line`、`reverse_line`、`transpose_board` 等函数，通过翻转和转置复用同一套逻辑。
+`archive/v3_refactored/game_2048.py` 对部分棋盘操作做了进一步拆分，包含 `compress_line`、`merge_line`、`reverse_line`、`transpose_board` 等函数。
 
 ### 程序流程
 
@@ -60,7 +57,7 @@
 - 执行移动并更新得分
 - 在有效移动后生成新的数字块
 
-### 排行榜
+### 计分与排行榜
 
 带排行榜的版本会在游戏结束时写入本地文本文件，并在启动或结束时读取、排序和显示历史得分。
 
@@ -69,20 +66,24 @@
 运行主版本：
 
 ```powershell
-python csclaude/cscodex/game_2048.py
+python game2048.py
 ```
 
-也可以运行其他版本：
+如需查看保留版本：
 
 ```powershell
-python csclaude/game2048.py
+python archive/v3_refactored/game_2048.py
 ```
+
+## 项目展示
+
+这个项目当前没有单独的截图目录，主要以终端界面运行。
 
 ## 后续优化方向
 
-- 统一多个版本的输入规则和排行榜格式
 - 为移动、合并和失败判断补充测试
-- 整理为单一主版本，减少重复实现
+- 统一各版本的输入规则和显示格式
+- 继续收敛保留版本数量
 
 ## AI 参与说明
 
